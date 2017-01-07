@@ -1,4 +1,4 @@
-function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base){
+function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours){
 	//top bar: 8/5*blockh
 	//middle bar: blockh
 	//bottom bar: 8/5*blockh
@@ -13,6 +13,7 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base){
 	this.middleBarScale = 1;
 	this.horizontalMargin = 1/3;
 	this.verticalMargin = 1/20;
+	this.extraBeads = 2;
 
 	this.blockHeight = 0;
 	this.blockWidth = 0;
@@ -31,13 +32,13 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base){
 	}
 
 	this.blockGivenHeight = function(height){
-		var blockheight = height/((2*this.topBottomBarScale)+(topnumber+2)+this.verticalMargin*(topnumber+2)+this.middleBarScale+(bottomnumber+2)+this.verticalMargin*(bottomnumber+2));
+		var blockheight = height/((2*this.topBottomBarScale)+(topnumber+this.extraBeads)+this.verticalMargin*(topnumber+this.extraBeads)+this.middleBarScale+(bottomnumber+this.extraBeads)+this.verticalMargin*(bottomnumber+this.extraBeads));
 		return blockheight;
 	}
 
 	this.heightGivenBlockWidth = function(blockwidth){
 		var blockheight = this.blockScaleYFromX*blockwidth;
-		var h = blockheight*((2*this.topBottomBarScale)+(topnumber+2)+this.verticalMargin*(topnumber+2)+this.middleBarScale+(bottomnumber+2)+this.verticalMargin*(bottomnumber+2));
+		var h = blockheight*((2*this.topBottomBarScale)+(topnumber+this.extraBeads)+this.verticalMargin*(topnumber+this.extraBeads)+this.middleBarScale+(bottomnumber+this.extraBeads)+this.verticalMargin*(bottomnumber+this.extraBeads));
 		return h;
 	}
 
@@ -60,8 +61,8 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base){
 		this.blockWidth = w;
 		this.abacusHeight = this.heightGivenBlockWidth(this.blockWidth);
 		this.abacusWidth = this.widthGivenBlockWidth(this.blockWidth);
-		this.upperBlockHeight = this.blockHeight*((topnumber+2)+this.verticalMargin*(topnumber+2));
-		this.lowerBlockHeight = this.blockHeight*((bottomnumber+2)+this.verticalMargin*(bottomnumber+2));
+		this.upperBlockHeight = this.blockHeight*((topnumber+this.extraBeads)+this.verticalMargin*(topnumber+this.extraBeads));
+		this.lowerBlockHeight = this.blockHeight*((bottomnumber+this.extraBeads)+this.verticalMargin*(bottomnumber+this.extraBeads));
 		console.log(this.blockHeight);
 		console.log(this.blockWidth);
 		console.log(this.abacusHeight);
@@ -91,24 +92,29 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base){
 	this.initColumns = function(){
 		var startx = ((stage.canvas.width-this.abacusWidth)/2)+(this.leftRightBarScale*this.blockWidth)+((this.horizontalMargin*this.blockWidth)/2)+(this.blockWidth/2);
 		var incr = ((this.horizontalMargin*this.blockWidth))+this.blockWidth;
-		console.log("======");
-		console.log(startx);
-		console.log(incr);
+		//console.log("======");
+		//console.log(startx);
+		//console.log(incr);
 		var starty = stage.canvas.height/10+(this.leftRightBarScale*this.blockWidth);
 		var endy = starty+this.upperBlockHeight;
 		var grey = ["#A0A0A0","#6B6B6B"];
 		var black = ["#000000","#000000"];
 		var colinuse;
+		console.log(colours);
+		var fill = colours.fill;
+		var stroke = colours.stroke;
+		var xocolinuse;
 		for (var item = 0; item<rods; item++){
 			if (item%2==0){
 				colinuse = black;
+				xocolinuse = fill;
 			} else {
 				colinuse = grey;
+				xocolinuse = stroke;
 			}
-			var c = new StandardAbacusColumn(startx,starty,endy,topnumber,0,topnumber,[],colinuse,this);
+			var c = new StandardAbacusColumn(startx,starty,endy,topnumber,0,topnumber+this.extraBeads,xocolinuse,colinuse,this);
 			c.init();
 			this.topcolumns.push(c);
-			console.log(c);
 			startx+=incr;
 		}
 		starty = endy+this.middleBarScale*this.blockHeight;
@@ -117,13 +123,14 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base){
 		for (var item = 0; item<rods; item++){
 			if (item%2==0){
 				colinuse = black;
+				xocolinuse = fill;
 			} else {
 				colinuse = grey;
+				xocolinuse = stroke;
 			}
-			var c = new StandardAbacusColumn(startx,starty,endy,topnumber,0,topnumber,[],colinuse,this);
+			var c = new StandardAbacusColumn(startx,starty,endy,0,bottomnumber,bottomnumber+this.extraBeads,xocolinuse,colinuse,this);
 			c.init();
-			this.topcolumns.push(c);
-			console.log(c);
+			this.bottomcolumns.push(c);
 			startx+=incr;
 		}
 	}
