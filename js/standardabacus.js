@@ -25,6 +25,8 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours){
 	this.stage = stage;
 	this.topcolumns = [];
 	this.bottomcolumns = [];
+	this.rodtext = [];
+	this.answertext = null;
 
 	this.blockGivenWidth = function(width){
 		var blockwidth = width/((2*this.leftRightBarScale)+rods+this.horizontalMargin*rods);
@@ -104,6 +106,7 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours){
 		var fill = colours.fill;
 		var stroke = colours.stroke;
 		var xocolinuse;
+		var val;
 		for (var item = 0; item<rods; item++){
 			if (item%2==0){
 				colinuse = black;
@@ -112,7 +115,8 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours){
 				colinuse = grey;
 				xocolinuse = stroke;
 			}
-			var c = new StandardAbacusColumn(startx,starty,endy,topnumber,0,topnumber+this.extraBeads,xocolinuse,colinuse,this);
+			val = Math.pow(base,rods-item-1)*factor;
+			var c = new StandardAbacusColumn(startx,starty,endy,topnumber,0,topnumber+this.extraBeads,xocolinuse,colinuse,this,val,true);
 			c.init();
 			this.topcolumns.push(c);
 			startx+=incr;
@@ -128,10 +132,72 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours){
 				colinuse = grey;
 				xocolinuse = stroke;
 			}
-			var c = new StandardAbacusColumn(startx,starty,endy,0,bottomnumber,bottomnumber+this.extraBeads,xocolinuse,colinuse,this);
+			val = Math.pow(base,rods-item-1);
+			var c = new StandardAbacusColumn(startx,starty,endy,0,bottomnumber,bottomnumber+this.extraBeads,xocolinuse,colinuse,this,val,false);
 			c.init();
 			this.bottomcolumns.push(c);
 			startx+=incr;
+		}
+	}
+
+	this.initTextItems = function(){
+		var startx = ((stage.canvas.width-this.abacusWidth)/2)+(this.leftRightBarScale*this.blockWidth)+((this.horizontalMargin*this.blockWidth)/2)+(this.blockWidth/2);
+		var incr = ((this.horizontalMargin*this.blockWidth))+this.blockWidth;
+		for (var i = 0; i<rods; i++){
+			var text = new createjs.Text("",(stage.canvas.width/70).toString()+"px Arial", "#FFF");
+			text.set({
+			    textAlign: 'center'
+			});
+			text.x = startx;
+			text.y = stage.canvas.height/10+this.abacusHeight-(this.leftRightBarScale*this.blockWidth)/2;
+			stage.addChild(text);
+			this.rodtext.push(text);
+			startx += incr;
+		}
+		var text = new createjs.Text("",(stage.canvas.width/30).toString()+"px Arial", "#000");
+		text.set({
+		    textAlign: 'center'
+		});
+		text.x = stage.canvas.width/2;
+		text.y = stage.canvas.height/25;
+		stage.addChild(text);
+		this.answertext = text;
+	}
+
+	this.updateTextItems = function(){
+		if (this.bottomcolumns.length==rods){
+			var sumarr = [];
+			var total = 0;
+			for (var i = 0; i<rods; i++){
+				var topuse = this.topcolumns[i].howManyInUse();
+				var bottomuse = this.bottomcolumns[i].howManyInUse();
+				var sum = factor*topuse.length;
+				sum += bottomuse.length;
+				if (sum!=0){
+					this.rodtext[i].text=sum.toString();
+				} else {
+					this.rodtext[i].text="";
+				}
+				var tempsum = this.topcolumns[i].value*topuse.length;
+				tempsum += this.bottomcolumns[i].value*bottomuse.length;
+				if (tempsum!=0){
+					sumarr.push(tempsum);
+					total+=tempsum;
+				}
+			}
+			if (sumarr.length==1){
+				var str = total.toString();
+				this.answertext.text = str;
+			} else if (total!=0){
+				var str = "";
+				for (var i = 0; i<sumarr.length-1; i++){
+					str += sumarr[i].toString()+" + ";
+				}
+				str += sumarr[sumarr.length-1].toString()+" = "+total.toString();
+				this.answertext.text = str;
+			} else {
+				this.answertext.text = "";
+			}
 		}
 	}
 
@@ -140,5 +206,6 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours){
 		this.initRectangle();
 		this.initDivider();
 		this.initColumns();
+		this.initTextItems();
 	}
 }

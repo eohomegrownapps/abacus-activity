@@ -1,7 +1,8 @@
-function StandardAbacusColumn(x,starty,endy,blockstop,blocksbottom,blocksheight,colcols,blockcols,abacus){
+function StandardAbacusColumn(x,starty,endy,blockstop,blocksbottom,blocksheight,colcols,blockcols,abacus,value,isupper){
 	this.elements = [];
 	this.colWidthScale = 8/33;
 	this.blockcols = blockcols;
+	this.value = value;
 	this.drawColumn = function(){
 		//grey: A0A0A0, stroke 6B6B6B
 		var width = this.colWidthScale*abacus.blockWidth;
@@ -34,13 +35,15 @@ function StandardAbacusColumn(x,starty,endy,blockstop,blocksbottom,blocksheight,
 			}
 			start+=incr;
 		}
+		console.log(this.howManyInUse());
+		abacus.updateTextItems();
 	}
 
 	this.initElements = function(){
 		this.elements = [];
 		for (var i = 0; i<blocksheight; i++){
 			if ((i<blockstop)||(i>=blocksheight-blocksbottom)){
-				var b = new AbacusBead(x,starty,colcols,abacus,this,i);
+				var b = new AbacusBead(x,starty,colcols,abacus,this,i,value);
 				b.init();
 				//console.log(b);
 				this.elements.push(b);
@@ -64,7 +67,7 @@ function StandardAbacusColumn(x,starty,endy,blockstop,blocksbottom,blocksheight,
 
 	this.shuntRight = function(index){
 		if (this.elements.indexOf(null)>index){
-			console.log(this.elements);
+			//console.log(this.elements);
 			var placeindex = this.elements.lastIndexOf(null)+1;
 			var endindex = this.elements.indexOf(null)-1;
 			var length = endindex-index+1;
@@ -72,7 +75,25 @@ function StandardAbacusColumn(x,starty,endy,blockstop,blocksbottom,blocksheight,
 			var args = [placeindex, 0].concat(movearray);
 			Array.prototype.splice.apply(this.elements, args);
 			this.updateY();
-			console.log(this.elements);
+			//console.log(this.elements);
+		}
+	}
+
+	this.howManyInUse = function(){
+		if (isupper==true){
+			var index = this.elements.lastIndexOf(null);
+			if (index!=this.elements.length-1){
+				return this.elements.slice(index+1,this.elements.length);
+			} else {
+				return [];
+			}
+		} else {
+			var index = this.elements.indexOf(null);
+			if (index!=0){
+				return this.elements.slice(0,index);
+			} else {
+				return [];
+			}
 		}
 	}
 

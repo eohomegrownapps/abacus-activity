@@ -1,4 +1,4 @@
-function AbacusBead(x,y,blockcol,abacus,column,i){
+function AbacusBead(x,y,blockcol,abacus,column,i,value){
 	this.bead = null;
 	this.originaly = null;
 	this.index = i;
