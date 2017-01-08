@@ -54,7 +54,13 @@ function AbacusBead(x,y,blockcol,abacus,column,i,value){
 	}
 
 	this.drawText = function(){
-		var text = new createjs.Text("1000",(abacus.blockWidth/3).toString()+"px Arial", "#000");
+		var usecol;
+		if (blockcol=="#000"||blockcol=="#000000"){
+			usecol = "#FFF";
+		} else {
+			usecol = "#000";
+		}
+		var text = new createjs.Text("1000",(abacus.blockWidth/3).toString()+"px Arial", usecol);
 		text.set({
 		    textAlign: 'center'
 		});
