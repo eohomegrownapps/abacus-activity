@@ -154,12 +154,12 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours){
 			this.rodtext.push(text);
 			startx += incr;
 		}
-		var text = new createjs.Text("",(stage.canvas.width/30).toString()+"px Arial", "#000");
+		var text = new createjs.Text("",(this.blockWidth).toString()+"px Arial", "#000");
 		text.set({
 		    textAlign: 'center'
 		});
 		text.x = stage.canvas.width/2;
-		text.y = stage.canvas.height/25;
+		text.y = stage.canvas.height/35;
 		stage.addChild(text);
 		this.answertext = text;
 	}

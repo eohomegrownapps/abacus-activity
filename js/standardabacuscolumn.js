@@ -32,6 +32,13 @@ function StandardAbacusColumn(x,starty,endy,blockstop,blocksbottom,blocksheight,
 			if (this.elements[i]!=null){
 				this.elements[i].updateY(start);
 				this.elements[i].updateIndex(i);
+				if (isupper==true&&this.elements.lastIndexOf(null)<i){
+					this.elements[i].updateValue(true);
+				} else if (isupper==false&&this.elements.indexOf(null)>i){
+					this.elements[i].updateValue(true);
+				} else {
+					this.elements[i].updateValue(false);
+				}
 			}
 			start+=incr;
 		}
