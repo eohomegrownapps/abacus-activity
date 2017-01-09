@@ -1,4 +1,4 @@
-function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours){
+function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours,startvalue=rods){
 	//top bar: 8/5*blockh
 	//middle bar: blockh
 	//bottom bar: 8/5*blockh
@@ -14,6 +14,7 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours){
 	this.horizontalMargin = 1/3;
 	this.verticalMargin = 1/20;
 	this.extraBeads = 2;
+	this.rods = rods;
 
 	this.blockHeight = 0;
 	this.blockWidth = 0;
@@ -115,7 +116,7 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours){
 				colinuse = grey;
 				xocolinuse = stroke;
 			}
-			val = Math.pow(base,rods-item-1)*factor;
+			val = Math.pow(base,startvalue-item-1)*factor;
 			var c = new StandardAbacusColumn(startx,starty,endy,topnumber,0,topnumber+this.extraBeads,xocolinuse,colinuse,this,val,true);
 			c.init();
 			this.topcolumns.push(c);
@@ -132,7 +133,7 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours){
 				colinuse = grey;
 				xocolinuse = stroke;
 			}
-			val = Math.pow(base,rods-item-1);
+			val = Math.pow(base,startvalue-item-1);
 			var c = new StandardAbacusColumn(startx,starty,endy,0,bottomnumber,bottomnumber+this.extraBeads,xocolinuse,colinuse,this,val,false);
 			c.init();
 			this.bottomcolumns.push(c);
@@ -169,6 +170,8 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours){
 			var sumarr = [];
 			var total = 0;
 			for (var i = 0; i<rods; i++){
+				this.topcolumns[i].updateAges();
+				this.bottomcolumns[i].updateAges();
 				var topuse = this.topcolumns[i].howManyInUse();
 				var bottomuse = this.bottomcolumns[i].howManyInUse();
 				var sum = factor*topuse.length;

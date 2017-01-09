@@ -30,8 +30,8 @@ function StandardAbacusColumn(x,starty,endy,blockstop,blocksbottom,blocksheight,
 		var incr = abacus.blockHeight+bmargin;
 		for (var i = 0; i<blocksheight; i++){
 			if (this.elements[i]!=null){
-				this.elements[i].updateY(start);
 				this.elements[i].updateIndex(i);
+				this.elements[i].updateY(start);
 				if (isupper==true&&this.elements.lastIndexOf(null)<i){
 					this.elements[i].updateValue(true);
 				} else if (isupper==false&&this.elements.indexOf(null)>i){
@@ -66,6 +66,9 @@ function StandardAbacusColumn(x,starty,endy,blockstop,blocksbottom,blocksheight,
 			var startindex = this.elements.lastIndexOf(null)+1;
 			var length = index-startindex+1;
 			var movearray = this.elements.splice(startindex,length);
+			//for (var i = 0; i<movearray.length; i++){
+			//	movearray[i].resetAge();
+			//}
 			var args = [placeindex, 0].concat(movearray);
 			Array.prototype.splice.apply(this.elements, args);
 			this.updateY();
@@ -74,12 +77,18 @@ function StandardAbacusColumn(x,starty,endy,blockstop,blocksbottom,blocksheight,
 
 	this.shuntRight = function(index){
 		if (this.elements.indexOf(null)>index){
-			//console.log(this.elements);
+			console.log("start");
+			console.log(this.elements);
 			var placeindex = this.elements.lastIndexOf(null)+1;
 			var endindex = this.elements.indexOf(null)-1;
 			var length = endindex-index+1;
 			var movearray = this.elements.splice(index,length);
-			var args = [placeindex, 0].concat(movearray);
+			console.log(movearray);
+			//for (var i = 0; i<movearray.length; i++){
+			//	movearray[i].resetAge();
+			//}
+			console.log(this.elements);
+			var args = [placeindex-length, 0].concat(movearray);
 			Array.prototype.splice.apply(this.elements, args);
 			this.updateY();
 			//console.log(this.elements);
@@ -100,6 +109,14 @@ function StandardAbacusColumn(x,starty,endy,blockstop,blocksbottom,blocksheight,
 				return this.elements.slice(0,index);
 			} else {
 				return [];
+			}
+		}
+	}
+
+	this.updateAges = function(){
+		for (var i = 0; i<this.elements.length; i++){
+			if (this.elements[i]!=null){
+				this.elements[i].updateAge();
 			}
 		}
 	}

@@ -3,7 +3,7 @@ function Game(stage,xocolor){
 		this.abacustype = 1;
 		this.abacus = null;
 		this.init = function(){
-			this.abacus = new StandardAbacus(stage,15,1,5,4,10,xocolor);
+			this.abacus = new StandardAbacus(stage,15,1,5,4,10,xocolor,8);
 			this.abacus.init();
 		}
 	}
@@ -33,7 +33,7 @@ function Game(stage,xocolor){
 	}
 	this.init = function(){
 		//var a = new StandardAbacus(stage,15,2,5,5,10,xocolor);
-		var a = new Hexadecimal(stage,xocolor);
+		var a = new Soroban(stage,xocolor);
 		a.init();
 	}
 }
