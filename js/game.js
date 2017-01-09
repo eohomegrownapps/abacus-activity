@@ -1,4 +1,12 @@
 function Game(stage,xocolor){
+	function Decimal(stage,xocolor){
+		this.abacustype = 0;
+		this.abacus = null;
+		this.init = function(){
+			this.abacus = new OneColumnAbacus(stage,15,10,10,xocolor);
+			this.abacus.init();
+		}
+	}
 	function Soroban(stage,xocolor){
 		this.abacustype = 1;
 		this.abacus = null;
@@ -31,9 +39,26 @@ function Game(stage,xocolor){
 			this.abacus.init();
 		}
 	}
+	function Binary(stage,xocolor){
+		this.abacustype = 5;
+		this.abacus = null;
+		this.init = function(){
+			this.abacus = new OneColumnAbacus(stage,15,1,2,xocolor);
+			this.abacus.init();
+		}
+	}
+	function Schety(stage,xocolor){
+		this.abacustype = 6;
+		this.abacus = null;
+		this.init = function(){
+			this.abacus = new OneColumnAbacus(stage,15,10,10,xocolor,null,true);
+			this.abacus.init();
+		}
+	}
+
 	this.init = function(){
 		//var a = new StandardAbacus(stage,15,2,5,5,10,xocolor);
-		var a = new Soroban(stage,xocolor);
+		var a = new Schety(stage,xocolor);
 		a.init();
 	}
 }

@@ -1,4 +1,4 @@
-function StandardAbacusColumn(x,starty,endy,blockstop,blocksbottom,blocksheight,colcols,blockcols,abacus,value,isupper){
+function StandardAbacusColumn(x,starty,endy,blockstop,blocksbottom,blocksheight,colcols,blockcols,abacus,value,isupper,aging=true,schety=false){
 	this.elements = [];
 	this.colWidthScale = 8/33;
 	this.blockcols = blockcols;
@@ -48,9 +48,19 @@ function StandardAbacusColumn(x,starty,endy,blockstop,blocksbottom,blocksheight,
 
 	this.initElements = function(){
 		this.elements = [];
+		var middlea;
+		var middleb;
+		if (schety==true){
+			middlea=(blocksheight-blocksbottom)+blocksbottom/2-1;
+			middleb=(blocksheight-blocksbottom)+(blocksbottom/2);
+		}
 		for (var i = 0; i<blocksheight; i++){
 			if ((i<blockstop)||(i>=blocksheight-blocksbottom)){
-				var b = new AbacusBead(x,starty,colcols,abacus,this,i,value);
+				if (schety==true&&(i==middlea||i==middleb)){
+					var b = new AbacusBead(x,starty,"#000",abacus,this,i,value);
+				} else {
+					var b = new AbacusBead(x,starty,colcols,abacus,this,i,value);
+				}
 				b.init();
 				//console.log(b);
 				this.elements.push(b);
@@ -115,7 +125,7 @@ function StandardAbacusColumn(x,starty,endy,blockstop,blocksbottom,blocksheight,
 
 	this.updateAges = function(){
 		for (var i = 0; i<this.elements.length; i++){
-			if (this.elements[i]!=null){
+			if (this.elements[i]!=null&&aging==true){
 				this.elements[i].updateAge();
 			}
 		}
