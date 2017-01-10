@@ -109,7 +109,13 @@ function OneColumnAbacus(stage,rods,number,base,colours,startvalue=rods,schety=f
 					colinuse = grey;
 					xocolinuse = stroke;
 				}
-				val = Math.pow(base,startvalue-item-1);
+				if (startvalue-item-1<0){
+					var div = new window.Fraction(1);
+					val = new window.Fraction(Math.pow(base,Math.abs(startvalue-item-1)));
+					val = div.div(val);
+				} else {
+					val = new window.Fraction(Math.pow(base,startvalue-item-1));
+				}
 				var c = new StandardAbacusColumn(startx,starty,endy,0,number,number+this.extraBeads,xocolinuse,colinuse,this,val,false);
 				c.init();
 				this.columns.push(c);
@@ -126,7 +132,8 @@ function OneColumnAbacus(stage,rods,number,base,colours,startvalue=rods,schety=f
 					colinuse = grey;
 					xocolinuse = stroke;
 				}
-				val = this.schetyColumns[item];
+				val = new window.Fraction(this.schetyColumns[item]);
+				console.log(val);
 				if(item==10){
 					theight=4;
 				} else {
@@ -167,7 +174,7 @@ function OneColumnAbacus(stage,rods,number,base,colours,startvalue=rods,schety=f
 	this.updateTextItems = function(){
 		if (this.columns.length==rods){
 			var sumarr = [];
-			var total = 0;
+			var total = new window.Fraction(0,1);
 			for (var i = 0; i<rods; i++){
 				this.columns[i].updateAges();
 				var use = this.columns[i].howManyInUse();
@@ -177,21 +184,23 @@ function OneColumnAbacus(stage,rods,number,base,colours,startvalue=rods,schety=f
 				} else {
 					this.rodtext[i].text="";
 				}
-				var tempsum = this.columns[i].value*use.length;
-				if (tempsum!=0){
-					sumarr.push(tempsum);
-					total+=tempsum;
+				var tempsum = this.columns[i].value.mul(use.length);
+				var zero = new window.Fraction(0);
+				if (!tempsum.equals(zero)){
+					sumarr.push(tempsum.toFraction(true));
+					total=total.add(tempsum);
 				}
 			}
+			var zero = new window.Fraction(0);
 			if (sumarr.length==1){
-				var str = total.toString();
+				var str = total.toFraction(true);
 				this.answertext.text = str;
-			} else if (total!=0){
+			} else if (!total.equals(zero)){
 				var str = "";
 				for (var i = 0; i<sumarr.length-1; i++){
-					str += sumarr[i].toString()+" + ";
+					str += sumarr[i]+" + ";
 				}
-				str += sumarr[sumarr.length-1].toString()+" = "+total.toString();
+				str += sumarr[sumarr.length-1]+" = "+total.toFraction(true);
 				this.answertext.text = str;
 			} else {
 				this.answertext.text = "";

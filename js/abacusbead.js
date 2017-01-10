@@ -79,8 +79,8 @@ function AbacusBead(x,y,blockcol,abacus,column,i,value){
 	}
 
 	this.updateValue = function(on){
-		if (on==true&&this.value.toString().length<=4){
-			this.text.text = this.value.toString();
+		if (on==true&&this.value.toFraction(true).length<=4){
+			this.text.text = this.value.toFraction(true);
 		} else {
 			this.text.text = "";
 		}

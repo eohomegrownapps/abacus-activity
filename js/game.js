@@ -1,4 +1,4 @@
-function Game(stage,xocolor){
+function Game(stage,xocolor,Fraction){
 	function Decimal(stage,xocolor){
 		this.abacustype = 0;
 		this.abacus = null;
@@ -57,6 +57,7 @@ function Game(stage,xocolor){
 	}
 
 	this.init = function(){
+		window.Fraction = Fraction;
 		//var a = new StandardAbacus(stage,15,2,5,5,10,xocolor);
 		var a = new Schety(stage,xocolor);
 		a.init();

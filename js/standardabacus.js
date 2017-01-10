@@ -116,7 +116,14 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours,st
 				colinuse = grey;
 				xocolinuse = stroke;
 			}
-			val = Math.pow(base,startvalue-item-1)*factor;
+			if (startvalue-item-1<0){
+				var div = new window.Fraction(1);
+				val = new window.Fraction(Math.pow(base,Math.abs(startvalue-item-1)));
+				val = div.div(val).mul(factor);
+			} else {
+				val = new window.Fraction(Math.pow(base,startvalue-item-1)).mul(factor);
+			}
+
 			var c = new StandardAbacusColumn(startx,starty,endy,topnumber,0,topnumber+this.extraBeads,xocolinuse,colinuse,this,val,true);
 			c.init();
 			this.topcolumns.push(c);
@@ -133,7 +140,14 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours,st
 				colinuse = grey;
 				xocolinuse = stroke;
 			}
-			val = Math.pow(base,startvalue-item-1);
+			if (startvalue-item-1<0){
+				var div = new window.Fraction(1);
+				val = new window.Fraction(Math.pow(base,Math.abs(startvalue-item-1)));
+				val = div.div(val);
+			} else {
+				val = new window.Fraction(Math.pow(base,startvalue-item-1));
+			}
+
 			var c = new StandardAbacusColumn(startx,starty,endy,0,bottomnumber,bottomnumber+this.extraBeads,xocolinuse,colinuse,this,val,false);
 			c.init();
 			this.bottomcolumns.push(c);
@@ -168,7 +182,7 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours,st
 	this.updateTextItems = function(){
 		if (this.bottomcolumns.length==rods){
 			var sumarr = [];
-			var total = 0;
+			var total = new window.Fraction(0,1);
 			for (var i = 0; i<rods; i++){
 				this.topcolumns[i].updateAges();
 				this.bottomcolumns[i].updateAges();
@@ -181,22 +195,30 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours,st
 				} else {
 					this.rodtext[i].text="";
 				}
-				var tempsum = this.topcolumns[i].value*topuse.length;
-				tempsum += this.bottomcolumns[i].value*bottomuse.length;
-				if (tempsum!=0){
-					sumarr.push(tempsum);
-					total+=tempsum;
+				var tempsum = new window.Fraction(0,1);
+				var tmp = this.topcolumns[i].value;
+				tmp = tmp.mul(topuse.length);
+				tempsum = tempsum.add(tmp);
+				tmp = this.bottomcolumns[i].value;
+				tmp = tmp.mul(bottomuse.length);
+				tempsum = tempsum.add(tmp);
+				var zero = new window.Fraction(0);
+				if (!tempsum.equals(zero)){
+					sumarr.push(tempsum.toFraction(true));
+					total = total.add(tempsum);
 				}
 			}
+			var zero = new window.Fraction(0);
+			console.log(sumarr);
 			if (sumarr.length==1){
-				var str = total.toString();
+				var str = total.toFraction(true);
 				this.answertext.text = str;
-			} else if (total!=0){
+			} else if (!total.equals(zero)){
 				var str = "";
 				for (var i = 0; i<sumarr.length-1; i++){
-					str += sumarr[i].toString()+" + ";
+					str += sumarr[i]+" + ";
 				}
-				str += sumarr[sumarr.length-1].toString()+" = "+total.toString();
+				str += sumarr[sumarr.length-1]+" = "+total.toFraction(true);
 				this.answertext.text = str;
 			} else {
 				this.answertext.text = "";
