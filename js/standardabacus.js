@@ -174,7 +174,7 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours,st
 		    textAlign: 'center'
 		});
 		text.x = stage.canvas.width/2;
-		text.y = stage.canvas.height/35;
+		text.y = stage.canvas.height/40;
 		stage.addChild(text);
 		this.answertext = text;
 	}

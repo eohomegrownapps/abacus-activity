@@ -1,3 +1,86 @@
 #main-toolbar #activity-button {
   background-image: url(../activity/activity-icon.svg);
 }
+
+#abacus-button {
+  background-image: url(../icons/abacus-list.svg);
+}
+
+#decimal-button {
+  background-image: url(../icons/decimal.svg);
+ width: 47px;
+height: 47px;
+margin: 4px 2px;
+background-position: center;
+background-repeat: no-repeat;
+background-size: contain;
+border-radius: 5.5px;
+}
+
+#soroban-button {
+  background-image: url(../icons/soroban.svg);
+  width: 47px;
+height: 47px;
+margin: 4px 2px;
+background-position: center;
+background-repeat: no-repeat;
+background-size: contain;
+border-radius: 5.5px;
+}
+
+#suanpan-button {
+  background-image: url(../icons/suanpan.svg);
+  width: 47px;
+height: 47px;
+margin: 4px 2px;
+background-position: center;
+background-repeat: no-repeat;
+background-size: contain;
+border-radius: 5.5px;
+}
+
+#nepo-button {
+  background-image: url(../icons/nepohualtzintzin.svg);
+  width: 47px;
+height: 47px;
+margin: 4px 2px;
+background-position: center;
+background-repeat: no-repeat;
+background-size: contain;
+border-radius: 5.5px;
+}
+
+#hex-button {
+  background-image: url(../icons/hexadecimal.svg);
+  width: 47px;
+height: 47px;
+margin: 4px 2px;
+background-position: center;
+background-repeat: no-repeat;
+background-size: contain;
+border-radius: 5.5px;
+}
+
+#binary-button {
+  background-image: url(../icons/binary.svg);
+  width: 47px;
+height: 47px;
+margin: 4px 2px;
+background-position: center;
+background-repeat: no-repeat;
+background-size: contain;
+border-radius: 5.5px;
+}
+
+#schety-button {
+  background-image: url(../icons/schety.svg);
+  width: 47px;
+height: 47px;
+margin: 4px 2px;
+background-position: center;
+background-repeat: no-repeat;
+background-size: contain;
+border-radius: 5.5px;
+}
+
+

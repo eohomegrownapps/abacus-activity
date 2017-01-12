@@ -166,7 +166,7 @@ function OneColumnAbacus(stage,rods,number,base,colours,startvalue=rods,schety=f
 		    textAlign: 'center'
 		});
 		text.x = stage.canvas.width/2;
-		text.y = stage.canvas.height/35;
+		text.y = stage.canvas.height/40;
 		stage.addChild(text);
 		this.answertext = text;
 	}

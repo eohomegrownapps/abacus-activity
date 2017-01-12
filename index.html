@@ -18,13 +18,25 @@
   <style> #canvas{background-color: #FFFFFF}</style>
 </head>
 
-<body>
+<body style="background-color: #FFFFFF">
 <div id="main-toolbar" class="toolbar">
   <button class="toolbutton" id="activity-button" title="Abacus Activity"></button>
   <!-- Add more buttons here -->
+  <button class="toolbutton" id="abacus-button" title="Abacus List"></button>
   <!-- Buttons with class="pull-right" will be right aligned -->
   <button class="toolbutton pull-right" id="stop-button" title="Stop"></button>
 </div>
+<!--<div id="abacus-toolbar" class="toolbar" style="
+    z-index: 1;
+    border-top-style: solid;
+    border-top-width: 2px;
+    border-top-color: #808080;
+    visibility: hidden;
+">
+  <button class="toolbutton" id="activity-button" title="Abacus Activity"></button>
+
+  <button class="toolbutton pull-right" id="stop-button" title="Stop"></button>
+</div> -->
 
 <!-- The content of your activity goes inside the canvas -->
 <div id="canvas">

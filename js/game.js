@@ -1,4 +1,7 @@
-function Game(stage,xocolor,Fraction){
+function Game(stage,xocolor,Fraction,doc,abacuspalette){
+	this.palette = null;
+	this.abacusrunning = null;
+
 	function Decimal(stage,xocolor){
 		this.abacustype = 0;
 		this.abacus = null;
@@ -56,10 +59,45 @@ function Game(stage,xocolor,Fraction){
 		}
 	}
 
+	this.initAbacus = function(abacus){
+		stage.removeAllChildren();
+		switch(abacus) {
+			case 0:
+				this.abacusrunning = new Decimal(stage,xocolor);
+				this.abacusrunning.init();
+				break;
+			case 1:
+				this.abacusrunning = new Soroban(stage,xocolor);
+				this.abacusrunning.init();
+				break;
+			case 2:
+				this.abacusrunning = new Suanpan(stage,xocolor);
+				this.abacusrunning.init();
+				break;
+			case 3:
+				this.abacusrunning = new Nephohualtzintzin(stage,xocolor);
+				this.abacusrunning.init();
+				break;
+			case 4:
+				this.abacusrunning = new Hexadecimal(stage,xocolor);
+				this.abacusrunning.init();
+				break;
+			case 5:
+				this.abacusrunning = new Binary(stage,xocolor);
+				this.abacusrunning.init();
+				break;
+			case 6:
+				this.abacusrunning = new Schety(stage,xocolor);
+				this.abacusrunning.init();
+				break;
+		}
+	}
+
 	this.init = function(){
 		window.Fraction = Fraction;
+		this.palette = new abacuspalette.AbacusPalette(this,doc.getElementById('abacus-button'),undefined);
 		//var a = new StandardAbacus(stage,15,2,5,5,10,xocolor);
-		var a = new Schety(stage,xocolor);
-		a.init();
+		this.abacusrunning = new Soroban(stage,xocolor);
+		this.abacusrunning.init();
 	}
 }
