@@ -62,6 +62,7 @@ define(["sugar-web/graphics/palette"], function (palette) {
 		}
 
 		this.setAbacus = function(state) {
+			that.popDown();
 			g.initAbacus(state);
 		}
 		
