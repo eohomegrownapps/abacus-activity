@@ -4,17 +4,17 @@ define(["sugar-web/activity/activity",'easeljs','tweenjs','activity/game','activ
 	require(['domReady!'], function (doc) {
 
 		// Initialize the activity.
-		require(["sugar-web/env","sugar-web/datastore","fraction","activity/abacuspalette"], function(env,datastore,fraction,abacuspalette) {
+		require(["sugar-web/env","sugar-web/datastore","fraction","activity/abacuspalette","activity/custompalette"], function(env,datastore,fraction,abacuspalette,custompalette) {
 			act.setup();
 			act.getXOColor(function (error, colors) {
-				runactivity(act,doc,colors,env,datastore,fraction,abacuspalette);
+				runactivity(act,doc,colors,env,datastore,fraction,abacuspalette,custompalette);
 			});
 		});
 	});
 
 });
 
-function runactivity(act,doc,colors,env,datastore,fraction,abacuspalette){
+function runactivity(act,doc,colors,env,datastore,fraction,abacuspalette,custompalette){
 	var canvas;
 	var stage;
 	var g;
@@ -33,7 +33,7 @@ function runactivity(act,doc,colors,env,datastore,fraction,abacuspalette){
 		function handleTick() {
 			stage.update();
 		}
-		var g = new Game(stage,colors,fraction,doc,abacuspalette);
+		var g = new Game(stage,colors,fraction,doc,abacuspalette,custompalette);
 		g.init();
 	}
 	init();

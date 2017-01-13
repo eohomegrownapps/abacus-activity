@@ -60,6 +60,13 @@ define(["sugar-web/graphics/palette"], function (palette) {
 		schetybutton.onclick = function() {
 			that.setAbacus(6);
 		}
+		var custombutton = document.createElement('button');
+		custombutton.className = 'toolbutton';
+		custombutton.setAttribute('id','custom-button');
+		custombutton.setAttribute('title','Custom');
+		custombutton.onclick = function() {
+			that.setAbacus(10);
+		}
 
 		this.setAbacus = function(state) {
 			that.popDown();
@@ -73,6 +80,7 @@ define(["sugar-web/graphics/palette"], function (palette) {
 		div.appendChild(hexbutton);
 		div.appendChild(binarybutton);
 		div.appendChild(schetybutton);
+		div.appendChild(custombutton);
 		
 		this.setContent([div]);
 		var that = this;

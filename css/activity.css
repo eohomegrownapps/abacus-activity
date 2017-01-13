@@ -6,6 +6,10 @@
   background-image: url(../icons/abacus-list.svg);
 }
 
+#settings-button {
+  background-image: url(../icons/custom.svg);
+}
+
 #decimal-button {
   background-image: url(../icons/decimal.svg);
  width: 47px;
@@ -74,6 +78,28 @@ border-radius: 5.5px;
 
 #schety-button {
   background-image: url(../icons/schety.svg);
+  width: 47px;
+height: 47px;
+margin: 4px 2px;
+background-position: center;
+background-repeat: no-repeat;
+background-size: contain;
+border-radius: 5.5px;
+}
+
+#custom-button {
+  background-image: url(../icons/custom.svg);
+  width: 47px;
+height: 47px;
+margin: 4px 2px;
+background-position: center;
+background-repeat: no-repeat;
+background-size: contain;
+border-radius: 5.5px;
+}
+
+#new-button {
+  background-image: url(../icons/new-abacus.svg);
   width: 47px;
 height: 47px;
 margin: 4px 2px;
