@@ -92,6 +92,34 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours,st
 		console.log(rect);
 	}
 
+	this.initTriangle = function(){
+		var tri = new createjs.Shape();
+		var width = this.blockWidth/4*3;
+		var y = stage.canvas.height/10+2*(this.leftRightBarScale*this.blockWidth)/3;
+		var startx = ((stage.canvas.width-this.abacusWidth)/2)+(this.leftRightBarScale*this.blockWidth)+((this.horizontalMargin*this.blockWidth)/2)+(this.blockWidth/2);
+		var incr = ((this.horizontalMargin*this.blockWidth))+this.blockWidth;
+		var x = startx+(incr*(rods-1));
+		tri.graphics.moveTo(0-width/2,0).beginFill("#FC0D1B").lineTo(0+width/2,0).lineTo(0,0+(this.leftRightBarScale*this.blockWidth)/3).lineTo(0-width/2,0).closePath();
+		tri.x = x;
+		tri.y = y;
+		stage.addChild(tri);
+		var c = tri;
+
+		tri.on("mousedown", function (evt) {
+			this.offset = {x: c.x - evt.stageX, y: c.y - evt.stageY};
+		});
+
+		tri.on("pressmove", function (evt) {
+			if (evt.stageX + this.offset.x < startx){
+				c.x = startx;
+			} else if (evt.stageX + this.offset.x > x){
+				c.x = x;
+			} else {
+				c.x = evt.stageX + this.offset.x;
+			}
+		});
+	}
+
 	this.initColumns = function(){
 		var startx = ((stage.canvas.width-this.abacusWidth)/2)+(this.leftRightBarScale*this.blockWidth)+((this.horizontalMargin*this.blockWidth)/2)+(this.blockWidth/2);
 		var incr = ((this.horizontalMargin*this.blockWidth))+this.blockWidth;
@@ -232,5 +260,6 @@ function StandardAbacus(stage,rods,topnumber,factor,bottomnumber,base,colours,st
 		this.initDivider();
 		this.initColumns();
 		this.initTextItems();
+		this.initTriangle();
 	}
 }
