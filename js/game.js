@@ -1,10 +1,12 @@
-function Game(stage,xocolor,Fraction,doc,abacuspalette,custompalette){
+function Game(activity,stage,xocolor,Fraction,doc,abacuspalette,custompalette,datastore){
 	this.palette = null;
 	this.custompalette = null;
 	this.abacus = null;
 	//rods top bottom factor base
 	this.customarr = [15,1,4,5,10];
+	this.abacustype = null;
 
+	//Custom Abacus
 	this.updateCustom = function(rods,top,bottom,factor,base){
 		this.customarr[0] = rods;
 		this.customarr[1] = top;
@@ -20,6 +22,7 @@ function Game(stage,xocolor,Fraction,doc,abacuspalette,custompalette){
 		this.abacus.init();
 	}
 
+	//Inits for other abaci
 	this.Decimal = function(stage,xocolor){
 		this.abacustype = 0;
 		this.abacus = new OneColumnAbacus(stage,15,10,10,xocolor);
@@ -56,6 +59,75 @@ function Game(stage,xocolor,Fraction,doc,abacuspalette,custompalette){
 		this.abacus.init();
 	}
 
+	//Resize
+
+	this.resize = function(){
+		var d = this.makeData();
+		stage.removeAllChildren();
+		this.customarr = d.customarr;
+		this.initAbacus(d.mode);
+		this.abacus.restore(d.abacusinuse);
+		this.abacus.restoreTri(d.trix);
+	}
+
+	//Save related things
+
+	this.makeData = function(){
+		var arr = {};
+		arr.mode = this.abacustype;
+		arr.customarr = this.customarr;
+		arr.abacusinuse = this.abacus.save();
+		arr.trix = this.abacus.saveTri();
+		console.log("arr");
+		console.log(arr);
+		return arr;
+	}
+
+	this.stop = function(restart=false){
+		var arr = this.makeData();
+		console.log(arr);
+		var js = JSON.stringify(arr);
+		activity.getDatastoreObject().setDataAsText(js);
+		if (restart == true){
+			activity.getDatastoreObject().save(function(){
+				location.reload();
+			});
+		} else {
+			activity.getDatastoreObject().save(function(){
+				activity.close();
+			});
+		}
+	}
+
+	//Load related things
+
+	this.init = function(){
+		console.log("init");
+		console.log(activity.getDatastoreObject());
+		activity.getDatastoreObject().getMetadata(this.init_canaccessdatastore.bind(this));
+	}
+
+	this.init_canaccessdatastore = function(error,mdata){
+		console.log("datastore check");
+		var d = new Date().getTime();
+		if (Math.abs(d-mdata.creation_time)<2000){
+			console.log("Time too short");
+			this.initActivity(false,[]);
+		} else {
+			activity.getDatastoreObject().loadAsText(this.init_getdatastore.bind(this));
+		}
+	}
+
+	this.init_getdatastore = function(error,metadata,data){
+		if (error==null&&data!=null){
+			data = JSON.parse(data);
+			this.initActivity(true,data);
+		} else {
+			this.initActivity(false,[]);
+		}
+	}
+
+	//Init related things
 	this.initAbacus = function(abacus){
 		stage.removeAllChildren();
 		switch(abacus) {
@@ -86,11 +158,20 @@ function Game(stage,xocolor,Fraction,doc,abacuspalette,custompalette){
 		}
 	}
 
-	this.init = function(){
+	this.initActivity = function(isdata,data){
+		console.log(isdata);
+		console.log(data);
 		window.Fraction = Fraction;
 		this.palette = new abacuspalette.AbacusPalette(this,doc.getElementById('abacus-button'),undefined);
 		this.custompalette = new custompalette.CustomPalette(this,doc.getElementById('settings-button'),undefined);
 		//var a = new StandardAbacus(stage,15,2,5,5,10,xocolor);
-		this.Soroban(stage,xocolor);
+		if (isdata){
+			this.customarr = data.customarr;
+			this.initAbacus(data.mode);
+			this.abacus.restore(data.abacusinuse);
+			this.abacus.restoreTri(data.trix);
+		} else {
+			this.Soroban(stage,xocolor);
+		}
 	}
 }

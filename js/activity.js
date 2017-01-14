@@ -33,8 +33,20 @@ function runactivity(act,doc,colors,env,datastore,fraction,abacuspalette,customp
 		function handleTick() {
 			stage.update();
 		}
-		var g = new Game(stage,colors,fraction,doc,abacuspalette,custompalette);
-		g.init();
+		var g = new Game(act,stage,colors,fraction,doc,abacuspalette,custompalette,datastore);
+		setTimeout(function(){ g.init(); }, 500);
+
+		window.addEventListener('activityStop', function (eve) {
+			eve.preventDefault();
+			g.stop();
+		});
+
+		window.addEventListener('resize', resizeCanvas, false);
+		function resizeCanvas() {
+			canvas.width = window.innerWidth; 
+			canvas.height = window.innerHeight-55;
+			g.resize();
+		}
 	}
 	init();
 }
