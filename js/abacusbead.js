@@ -18,6 +18,12 @@ function AbacusBead(x,y,blockcol,abacus,column,i,value){
 		this.age = -1;
 	}
 
+	this.forceAge = function(age){
+		this.age = age-1;
+		console.log(this.age);
+		this.updateAge();
+	}
+
 	this.updateAge = function(){
 		this.age+=1;
 		if (this.age==0){

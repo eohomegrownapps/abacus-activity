@@ -42,7 +42,7 @@ function StandardAbacusColumn(x,starty,endy,blockstop,blocksbottom,blocksheight,
 			}
 			start+=incr;
 		}
-		console.log(this.howManyInUse());
+		//console.log(this.howManyInUse());
 		abacus.updateTextItems();
 	}
 
@@ -129,6 +129,43 @@ function StandardAbacusColumn(x,starty,endy,blockstop,blocksbottom,blocksheight,
 				this.elements[i].updateAge();
 			}
 		}
+	}
+
+	this.restore = function(arr){
+		var newelements = [];
+		for (var i = 0; i<this.elements.length; i++){
+			if (this.elements[i]!=null){
+				newelements.push(this.elements[i]);
+			}
+		}
+		this.elements = newelements;
+		for (var i = 0; i<arr.length; i++){
+			if (arr[i] == null){
+				this.elements.splice(i, 0, null);
+			}
+		}
+		//console.log(this.elements);
+		this.updateY();
+	}
+
+	this.restoreAge = function(arr){
+		for (var i = 0; i<this.elements.length; i++){
+			if (this.elements[i]!=null){
+				this.elements[i].forceAge(arr[i]);
+			}
+		}
+	}
+
+	this.save = function(){
+		var arr = [];
+		for (var i = 0; i<this.elements.length; i++){
+			if (this.elements[i]==null){
+				arr.push(null);
+			} else {
+				arr.push(this.elements[i].age);
+			}
+		}
+		return arr;
 	}
 
 	this.init = function(){

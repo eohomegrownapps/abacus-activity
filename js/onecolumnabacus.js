@@ -29,6 +29,9 @@ function OneColumnAbacus(stage,rods,number,base,colours,startvalue=rods,schety=f
 	this.rodtext = [];
 	this.answertext = null;
 
+	this.trix = null;
+	this.startx = null;
+
 	this.schetyColumns = [1000000000,100000000,10000000,1000000,100000,10000,1000,100,10,1,0.25,0.1,0.01,0.001,0.0001];
 
 	this.blockGivenWidth = function(width){
@@ -71,7 +74,7 @@ function OneColumnAbacus(stage,rods,number,base,colours,startvalue=rods,schety=f
 		console.log(this.blockWidth);
 		console.log(this.abacusHeight);
 		console.log(this.abacusWidth);
-
+		this.startx = ((stage.canvas.width-this.abacusWidth)/2)+(this.leftRightBarScale*this.blockWidth)+((this.horizontalMargin*this.blockWidth)/2)+(this.blockWidth/2);
 	}
 
 	this.initRectangle = function(){
@@ -85,23 +88,24 @@ function OneColumnAbacus(stage,rods,number,base,colours,startvalue=rods,schety=f
 	}
 
 	this.initTriangle = function(){
-		var tri = new createjs.Shape();
+		this.tri = new createjs.Shape();
 		var width = this.blockWidth/4*3;
 		var y = stage.canvas.height/10+2*(this.leftRightBarScale*this.blockWidth)/3;
 		var startx = ((stage.canvas.width-this.abacusWidth)/2)+(this.leftRightBarScale*this.blockWidth)+((this.horizontalMargin*this.blockWidth)/2)+(this.blockWidth/2);
 		var incr = ((this.horizontalMargin*this.blockWidth))+this.blockWidth;
 		var x = startx+(incr*(rods-1));
-		tri.graphics.moveTo(0-width/2,0).beginFill("#FC0D1B").lineTo(0+width/2,0).lineTo(0,0+(this.leftRightBarScale*this.blockWidth)/3).lineTo(0-width/2,0).closePath();
-		tri.x = x;
-		tri.y = y;
-		stage.addChild(tri);
-		var c = tri;
-
-		tri.on("mousedown", function (evt) {
+		this.tri.graphics.moveTo(0-width/2,0).beginFill("#FC0D1B").lineTo(0+width/2,0).lineTo(0,0+(this.leftRightBarScale*this.blockWidth)/3).lineTo(0-width/2,0).closePath();
+		this.tri.x = x;
+		this.tri.y = y;
+		this.trix = this.tri.x-this.startx;
+		stage.addChild(this.tri);
+		var c = this.tri;
+		var t = this;
+		this.tri.on("mousedown", function (evt) {
 			this.offset = {x: c.x - evt.stageX, y: c.y - evt.stageY};
 		});
 
-		tri.on("pressmove", function (evt) {
+		this.tri.on("pressmove", function (evt) {
 			if (evt.stageX + this.offset.x < startx){
 				c.x = startx;
 			} else if (evt.stageX + this.offset.x > x){
@@ -109,6 +113,7 @@ function OneColumnAbacus(stage,rods,number,base,colours,startvalue=rods,schety=f
 			} else {
 				c.x = evt.stageX + this.offset.x;
 			}
+			t.trix = c.x-t.startx;
 		});
 	}
 
@@ -173,6 +178,35 @@ function OneColumnAbacus(stage,rods,number,base,colours,startvalue=rods,schety=f
 				startx+=incr;
 			}
 		}
+	}
+
+	this.restore = function(arr){
+		for (var i = 0; i<arr.length; i++){
+			this.columns[i].restore(arr[i]);
+		}
+		for (var i = 0; i<arr.length; i++){
+			this.columns[i].restoreAge(arr[i]);
+		}
+	}
+
+	this.save = function(){
+		var arr = [];
+		for (var i = 0; i<this.columns.length; i++){
+			arr.push(this.columns[i].save());
+		}
+		return arr;
+	}
+
+	this.saveTri = function(){
+		console.log(this.trix);
+		return this.trix/this.abacusWidth;
+	}
+
+	this.restoreTri = function(x){
+		console.log(x);
+		this.tri.x = this.startx+(x*this.abacusWidth);
+		this.trix = this.tri.x-this.startx;
+		console.log(this.tri.x);
 	}
 
 	this.initTextItems = function(){
