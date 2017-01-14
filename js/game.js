@@ -59,7 +59,7 @@ function Game(activity,stage,xocolor,Fraction,doc,abacuspalette,custompalette,da
 		this.abacus.init();
 	}
 
-	//Resize
+	//Resize/clear
 
 	this.resize = function(){
 		var d = this.makeData();
@@ -68,6 +68,11 @@ function Game(activity,stage,xocolor,Fraction,doc,abacuspalette,custompalette,da
 		this.initAbacus(d.mode);
 		this.abacus.restore(d.abacusinuse);
 		this.abacus.restoreTri(d.trix);
+	}
+
+	this.clear = function(){
+		stage.removeAllChildren();
+		this.initAbacus(this.abacustype);
 	}
 
 	//Save related things

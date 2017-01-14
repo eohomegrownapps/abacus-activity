@@ -47,6 +47,11 @@ function runactivity(act,doc,colors,env,datastore,fraction,abacuspalette,customp
 			canvas.height = window.innerHeight-55;
 			g.resize();
 		}
+
+		var clearButton = doc.getElementById("clear-button");
+			clearButton.addEventListener('click', function (a) {
+			g.clear();
+		});
 	}
 	init();
 }

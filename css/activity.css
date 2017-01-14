@@ -10,6 +10,10 @@
   background-image: url(../icons/custom.svg);
 }
 
+#clear-button {
+  background-image: url(../icons/edit-clear.svg);
+}
+
 #decimal-button {
   background-image: url(../icons/decimal.svg);
  width: 47px;
