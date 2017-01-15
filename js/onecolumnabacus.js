@@ -97,7 +97,7 @@ function OneColumnAbacus(stage,rods,number,base,colours,startvalue=rods,schety=f
 		var incr = ((this.horizontalMargin*this.blockWidth))+this.blockWidth;
 		var x = startx+(incr*(rods-1));
 		this.tri.graphics.moveTo(0-width/2,0).beginFill("#FC0D1B").lineTo(0+width/2,0).lineTo(0,0+(this.leftRightBarScale*this.blockWidth)/3).lineTo(0-width/2,0).closePath();
-		this.tri.x = x;
+		this.tri.x = x-(this.blockWidth/2);
 		this.tri.y = y;
 		this.trix = this.tri.x-this.startx;
 		stage.addChild(this.tri);
@@ -108,10 +108,10 @@ function OneColumnAbacus(stage,rods,number,base,colours,startvalue=rods,schety=f
 		});
 
 		this.tri.on("pressmove", function (evt) {
-			if (evt.stageX + this.offset.x < startx){
-				c.x = startx;
-			} else if (evt.stageX + this.offset.x > x){
-				c.x = x;
+			if (evt.stageX + this.offset.x < startx-(t.blockWidth/2)){
+				c.x = startx-(t.blockWidth/2);
+			} else if (evt.stageX + this.offset.x > x+(t.blockWidth/2)){
+				c.x = x+(t.blockWidth/2);
 			} else {
 				c.x = evt.stageX + this.offset.x;
 			}

@@ -202,5 +202,6 @@ function Game(activity,stage,xocolor,Fraction,doc,abacuspalette,custompalette,da
 		} else {
 			this.Soroban(stage,xocolor);
 		}
+		this.palette.setUsed();
 	}
 }

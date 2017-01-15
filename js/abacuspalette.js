@@ -92,6 +92,58 @@ define(["sugar-web/graphics/palette"], function (palette) {
 		this.setAbacus = function(state) {
 			that.popDown();
 			g.initAbacus(state);
+			that.setUsed();
+		}
+		this.resetBackgroundCols = function(){
+			decimalbutton.style.backgroundColor = "#C0C0C0";
+			sorobanbutton.style.backgroundColor = "#C0C0C0";
+			suanpanbutton.style.backgroundColor = "#C0C0C0";
+			nepobutton.style.backgroundColor = "#C0C0C0";
+			hexbutton.style.backgroundColor = "#C0C0C0";
+			binarybutton.style.backgroundColor = "#C0C0C0";
+			schetybutton.style.backgroundColor = "#C0C0C0";
+			fractionsbutton.style.backgroundColor = "#C0C0C0";
+			caacupebutton.style.backgroundColor = "#C0C0C0";
+			rodsbutton.style.backgroundColor = "#C0C0C0";
+			custombutton.style.backgroundColor = "#C0C0C0";
+		}
+		this.setUsed = function(){
+			this.resetBackgroundCols();
+			switch(game.abacustype) {
+				case 0:
+					decimalbutton.style.backgroundColor = "#808080";
+					break;
+				case 1:
+					sorobanbutton.style.backgroundColor = "#808080";
+					break;
+				case 2:
+					suanpanbutton.style.backgroundColor = "#808080";
+					break;
+				case 3:
+					nepobutton.style.backgroundColor = "#808080";
+					break;
+				case 4:
+					hexbutton.style.backgroundColor = "#808080";
+					break;
+				case 5:
+					binarybutton.style.backgroundColor = "#808080";
+					break;
+				case 6:
+					schetybutton.style.backgroundColor = "#808080";
+					break;
+				case 7:
+					fractionsbutton.style.backgroundColor = "#808080";
+					break;
+				case 8:
+					caacupebutton.style.backgroundColor = "#808080";
+					break;
+				case 9:
+					rodsbutton.style.backgroundColor = "#808080";
+					break;
+				case 10:
+					custombutton.style.backgroundColor = "#808080";
+					break;
+			}
 		}
 		
 		div.appendChild(decimalbutton);
