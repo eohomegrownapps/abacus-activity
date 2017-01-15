@@ -1,4 +1,4 @@
-define(["sugar-web/activity/activity",'easeljs','tweenjs','activity/game','activity/standardabacus','activity/standardabacuscolumn','activity/abacusbead','activity/onecolumnabacus'], function (act) {
+define(["sugar-web/activity/activity",'easeljs','tweenjs','activity/game','activity/standardabacus','activity/standardabacuscolumn','activity/abacusbead','activity/onecolumnabacus','activity/posnegcolumn'], function (act) {
 
 	// Manipulate the DOM only when it is ready.
 	require(['domReady!'], function (doc) {

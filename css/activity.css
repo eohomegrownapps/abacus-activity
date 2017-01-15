@@ -91,6 +91,39 @@ background-size: contain;
 border-radius: 5.5px;
 }
 
+#fractions-button {
+  background-image: url(../icons/fraction.svg);
+  width: 47px;
+height: 47px;
+margin: 4px 2px;
+background-position: center;
+background-repeat: no-repeat;
+background-size: contain;
+border-radius: 5.5px;
+}
+
+#caacupe-button {
+  background-image: url(../icons/caacupe.svg);
+  width: 47px;
+height: 47px;
+margin: 4px 2px;
+background-position: center;
+background-repeat: no-repeat;
+background-size: contain;
+border-radius: 5.5px;
+}
+
+#rods-button {
+  background-image: url(../icons/cuisenaire.svg);
+  width: 47px;
+height: 47px;
+margin: 4px 2px;
+background-position: center;
+background-repeat: no-repeat;
+background-size: contain;
+border-radius: 5.5px;
+}
+
 #custom-button {
   background-image: url(../icons/custom.svg);
   width: 47px;

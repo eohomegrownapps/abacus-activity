@@ -60,6 +60,27 @@ define(["sugar-web/graphics/palette"], function (palette) {
 		schetybutton.onclick = function() {
 			that.setAbacus(6);
 		}
+		var fractionsbutton = document.createElement('button');
+		fractionsbutton.className = 'toolbutton';
+		fractionsbutton.setAttribute('id','fractions-button');
+		fractionsbutton.setAttribute('title','Fractions');
+		fractionsbutton.onclick = function() {
+			that.setAbacus(7);
+		}
+		var caacupebutton = document.createElement('button');
+		caacupebutton.className = 'toolbutton';
+		caacupebutton.setAttribute('id','caacupe-button');
+		caacupebutton.setAttribute('title','Caacupé');
+		caacupebutton.onclick = function() {
+			that.setAbacus(8);
+		}
+		var rodsbutton = document.createElement('button');
+		rodsbutton.className = 'toolbutton';
+		rodsbutton.setAttribute('id','rods-button');
+		rodsbutton.setAttribute('title','Rods');
+		rodsbutton.onclick = function() {
+			that.setAbacus(9);
+		}
 		var custombutton = document.createElement('button');
 		custombutton.className = 'toolbutton';
 		custombutton.setAttribute('id','custom-button');
@@ -80,6 +101,9 @@ define(["sugar-web/graphics/palette"], function (palette) {
 		div.appendChild(hexbutton);
 		div.appendChild(binarybutton);
 		div.appendChild(schetybutton);
+		div.appendChild(fractionsbutton);
+		div.appendChild(caacupebutton);
+		div.appendChild(rodsbutton);
 		div.appendChild(custombutton);
 		
 		this.setContent([div]);

@@ -1,4 +1,4 @@
-function AbacusBead(x,y,blockcol,abacus,column,i,value){
+function AbacusBead(x,y,blockcol,abacus,column,i,value,beadheight=-1){
 	var Color = net.brehaut.Color;
 
 	this.bead = null;
@@ -26,8 +26,9 @@ function AbacusBead(x,y,blockcol,abacus,column,i,value){
 
 	this.updateAge = function(){
 		this.age+=1;
-		if (this.age==0){
+		if (this.age<=0){
 			this.redraw("#FFF");
+			this.age = 0;
 		} else if (this.age<3){
 			var col = Color(blockcol);
 			col = col.setSaturation(col.getSaturation()/3);
@@ -40,14 +41,26 @@ function AbacusBead(x,y,blockcol,abacus,column,i,value){
 	}
 
 	this.redraw = function(colour){
-		this.bead.graphics.clear().beginStroke("#000000").setStrokeStyle(abacus.blockWidth/25).beginFill(colour).drawRoundRect(-1*abacus.blockWidth/2,0,abacus.blockWidth,abacus.blockHeight,abacus.blockHeight/2);
+		var bh;
+		if (beadheight==-1){
+			bh = abacus.blockHeight;
+		} else {
+			bh = beadheight;
+		}
+		this.bead.graphics.clear().beginStroke("#000000").setStrokeStyle(abacus.blockWidth/25).beginFill(colour).drawRoundRect(-1*abacus.blockWidth/2,0,abacus.blockWidth,bh,abacus.blockHeight/2);
 	}
 
 	this.drawBead = function(colour=blockcol){
+		var bh;
+		if (beadheight==-1){
+			bh = abacus.blockHeight;
+		} else {
+			bh = beadheight;
+		}
 		this.bead = new createjs.Shape();
 		this.bead.graphics.beginStroke("#000000");
 		this.bead.graphics.setStrokeStyle(abacus.blockWidth/25);
-		this.bead.graphics.beginFill(colour).drawRoundRect(-1*abacus.blockWidth/2,0,abacus.blockWidth,abacus.blockHeight,abacus.blockHeight/2);
+		this.bead.graphics.beginFill(colour).drawRoundRect(-1*abacus.blockWidth/2,0,abacus.blockWidth,bh,abacus.blockHeight/2);
 		this.bead.x = 0;
 		this.bead.y = 0;
 		this.containerbead = new createjs.Container();
@@ -84,9 +97,13 @@ function AbacusBead(x,y,blockcol,abacus,column,i,value){
 		});
 	}
 
-	this.updateValue = function(on){
+	this.updateValue = function(on,positive=true){
 		if (on==true&&this.value.toFraction(true).length<=4){
-			this.text.text = this.value.toFraction(true);
+			if (positive==false){
+				this.text.text = "-"+this.value.toFraction(true);
+			} else {
+				this.text.text = this.value.toFraction(true);
+			}
 		} else {
 			this.text.text = "";
 		}
@@ -104,7 +121,13 @@ function AbacusBead(x,y,blockcol,abacus,column,i,value){
 		    textAlign: 'center'
 		});
 		text.x = 0;
-		text.y = abacus.blockHeight/3;
+		var bh;
+		if (beadheight==-1){
+			bh = abacus.blockHeight/3;
+		} else {
+			bh = beadheight/2-abacus.blockHeight/3;
+		}
+		text.y = bh;
 		this.containerbead.addChild(text);
 		this.text = text;
 	}

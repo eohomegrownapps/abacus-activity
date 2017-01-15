@@ -58,6 +58,21 @@ function Game(activity,stage,xocolor,Fraction,doc,abacuspalette,custompalette,da
 		this.abacus = new OneColumnAbacus(stage,15,10,10,xocolor,null,true);
 		this.abacus.init();
 	}
+	this.Fractions = function(stage,xocolor){
+		this.abacustype = 7;
+		this.abacus = new OneColumnAbacus(stage,15,12,10,xocolor,null,false,true);
+		this.abacus.init();
+	}
+	this.Caacupé = function(stage,xocolor){
+		this.abacustype = 8;
+		this.abacus = new OneColumnAbacus(stage,15,12,10,xocolor,null,false,false,true);
+		this.abacus.init();
+	}
+	this.Rods = function(stage,xocolor){
+		this.abacustype = 9;
+		this.abacus = new OneColumnAbacus(stage,10,12,10,xocolor,null,false,false,false,true);
+		this.abacus.init();
+	}
 
 	//Resize/clear
 
@@ -156,6 +171,15 @@ function Game(activity,stage,xocolor,Fraction,doc,abacuspalette,custompalette,da
 				break;
 			case 6:
 				this.Schety(stage,xocolor);
+				break;
+			case 7:
+				this.Fractions(stage,xocolor);
+				break;
+			case 8:
+				this.Caacupé(stage,xocolor);
+				break;
+			case 9:
+				this.Rods(stage,xocolor);
 				break;
 			case 10:
 				this.Custom(stage,xocolor);
