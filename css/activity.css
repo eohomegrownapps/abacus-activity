@@ -14,6 +14,10 @@
   background-image: url(../icons/edit-clear.svg);
 }
 
+#copy-button {
+  background-image: url(../icons/tool-copy.svg);
+}
+
 #decimal-button {
   background-image: url(../icons/decimal.svg);
  width: 47px;

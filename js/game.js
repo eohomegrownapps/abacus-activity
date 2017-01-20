@@ -74,6 +74,26 @@ function Game(activity,stage,xocolor,Fraction,doc,abacuspalette,custompalette,da
 		this.abacus.init();
 	}
 
+	//Copy
+	this.copy = function(){
+		var text = "";
+		console.log(this.abacus);
+		if (this.abacus!=null){
+			if (this.abacus.answertext!=null){
+				if (this.abacus.answertext.text.length>0){
+					text = this.abacus.answertext.text;
+					if (text.indexOf('=') > -1){
+						text = text.substring(text.indexOf('=')+2);
+					}
+				}
+			}
+		}
+		function copyToClipboard(t) {
+			window.prompt("Copy to clipboard: ", t);
+		}
+		copyToClipboard(text);
+	} 
+
 	//Resize/clear
 
 	this.resize = function(){

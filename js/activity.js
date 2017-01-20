@@ -52,6 +52,10 @@ function runactivity(act,doc,colors,env,datastore,fraction,abacuspalette,customp
 			clearButton.addEventListener('click', function (a) {
 			g.clear();
 		});
+		var copyButton = doc.getElementById("copy-button");
+			copyButton.addEventListener('click', function (a) {
+			g.copy();
+		});
 	}
 	init();
 }
