@@ -1,4 +1,5 @@
-function AbacusBead(x,y,blockcol,abacus,column,i,value,beadheight=-1){
+function AbacusBead(x,y,blockcol,abacus,column,i,value,beadheight){
+	if (beadheight === undefined) beadheight=-1;
 	var Color = net.brehaut.Color;
 
 	this.bead = null;
@@ -25,6 +26,11 @@ function AbacusBead(x,y,blockcol,abacus,column,i,value,beadheight=-1){
 	}
 
 	this.updateAge = function(){
+		// HACK: On iOS, Android and Safari, remove age handling to avoid black beads (saturation not supported)
+		var ua = navigator.userAgent.toLowerCase();
+		if ((ua.indexOf('safari') != -1 && ua.indexOf('chrome') == -1) || /Android/i.test(ua) || ua.match(/ipad|iphone|ipod/g)) {
+			return;
+		}
 		this.age+=1;
 		if (this.age<=0){
 			this.redraw("#FFF");
@@ -50,7 +56,8 @@ function AbacusBead(x,y,blockcol,abacus,column,i,value,beadheight=-1){
 		this.bead.graphics.clear().beginStroke("#000000").setStrokeStyle(abacus.blockWidth/25).beginFill(colour).drawRoundRect(-1*abacus.blockWidth/2,0,abacus.blockWidth,bh,abacus.blockHeight/2);
 	}
 
-	this.drawBead = function(colour=blockcol){
+	this.drawBead = function(colour){
+		if (colour === undefined) colour=blockcol;
 		var bh;
 		if (beadheight==-1){
 			bh = abacus.blockHeight;
@@ -97,7 +104,8 @@ function AbacusBead(x,y,blockcol,abacus,column,i,value,beadheight=-1){
 		});
 	}
 
-	this.updateValue = function(on,positive=true){
+	this.updateValue = function(on,positive){
+		if (positive === undefined) positive=true;
 		if (on==true&&this.value.toFraction(true).length<=4){
 			if (positive==false){
 				this.text.text = "-"+this.value.toFraction(true);
