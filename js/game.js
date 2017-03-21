@@ -89,10 +89,17 @@ function Game(activity,stage,xocolor,Fraction,doc,abacuspalette,custompalette,da
 			}
 		}
 		function copyToClipboard(t) {
-			window.prompt("Copy to clipboard: ", t);
+			var copyText = document.getElementById('copytext');
+			copyText.value = t;
+			copyText.select();
+			try {
+				document.execCommand('copy');
+			} catch (err) {
+				window.prompt("Copy to clipboard: ", t);
+			}
 		}
 		copyToClipboard(text);
-	} 
+	}
 
 	//Resize/clear
 
@@ -123,7 +130,8 @@ function Game(activity,stage,xocolor,Fraction,doc,abacuspalette,custompalette,da
 		return arr;
 	}
 
-	this.stop = function(restart=false){
+	this.stop = function(restart){
+		if (restart === undefined) restart=false;
 		var arr = this.makeData();
 		console.log(arr);
 		var js = JSON.stringify(arr);
@@ -220,7 +228,7 @@ function Game(activity,stage,xocolor,Fraction,doc,abacuspalette,custompalette,da
 			this.abacus.restore(data.abacusinuse);
 			this.abacus.restoreTri(data.trix);
 		} else {
-			this.Soroban(stage,xocolor);
+			this.Suanpan(stage,xocolor);
 		}
 		this.palette.setUsed();
 	}
